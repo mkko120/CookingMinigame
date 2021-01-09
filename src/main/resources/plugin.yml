@@ -1,0 +1,13 @@
+name: CookingMech
+version: ${project.version}
+main: pl.trollcraft.alvion.cookingminigame.CookingMinigame
+api-version: 1.16
+authors: [ mkko120 ]
+description: Cooking Mechanics for AlvionSF
+
+commands:
+  cook:
+    description: open cooking menu.
+    aliases:
+      - ck
+      - cm
