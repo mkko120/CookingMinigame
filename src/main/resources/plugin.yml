@@ -1,6 +1,6 @@
 name: CookingMech
 version: ${project.version}
-main: pl.trollcraft.alvion.cookingminigame.CookingMinigame
+main: pl.trollcraft.alvion.cookingmech.CookingMinigame
 api-version: 1.16
 authors: [ mkko120 ]
 description: Cooking Mechanics for AlvionSF

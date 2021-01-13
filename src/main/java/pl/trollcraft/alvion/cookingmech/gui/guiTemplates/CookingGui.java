@@ -2,6 +2,8 @@ package pl.trollcraft.alvion.cookingmech.gui.guiTemplates;
 
 import me.mattstudios.mfgui.gui.components.exception.GuiException;
 import me.mattstudios.mfgui.gui.components.util.GuiFiller;
+import me.mattstudios.mfgui.gui.components.util.ItemBuilder;
+import me.mattstudios.mfgui.gui.guis.Gui;
 import me.mattstudios.mfgui.gui.guis.GuiItem;
 import me.mattstudios.mfgui.gui.guis.PersistentGui;
 import org.bukkit.Material;
@@ -16,20 +18,37 @@ import pl.trollcraft.alvion.cookingmech.recipes.flames.FlameTime;
 
 public class CookingGui {
 
-    public static PersistentGui gui = GuiUtils.createPersistentGui(53,"Gotowanie");
+    public static PersistentGui gui = GuiUtils.createPersistentGui(6,"Gotowanie");
     private static Recipe recipe;
     private static void cookingGui(Player player) {
+        GuiFiller filler = new GuiFiller(gui);
+        GuiItem fillerMaterial = GuiUtils.convertToGuiItem(Material.GRAY_STAINED_GLASS_PANE);
+        fillerMaterial.setAction(event -> event.setCancelled(true));
+        try {
+            filler.fillBorder(fillerMaterial);
+            filler.fillBetweenPoints(4, 1, 4, 9, fillerMaterial);
+            filler.fillBetweenPoints(2, 6, 2, 6, fillerMaterial);
+            filler.fillBetweenPoints(3, 6, 3, 6, fillerMaterial);
+            filler.fillBetweenPoints(5, 6, 5, 6, fillerMaterial);
+            filler.fillBetweenPoints(2, 8, 2, 8, fillerMaterial);
+            filler.fillBetweenPoints(3, 8, 3, 8, fillerMaterial);
+            filler.fillBetweenPoints(5, 8, 5, 8, fillerMaterial);
+        }catch (GuiException e) {
+            e.printStackTrace();
+        }
 
         try {
             GuiItem i15 = GuiUtils.convertToGuiItem(Material.NETHER_STAR, "Start baking");
             i15.setAction(event -> {
 
+                event.setCancelled(true);
+
                 ItemStack[] main = new ItemStack[4];
                 int i1 = 0;
                 for (int i = 10; i < 13; i++) {
-                    GuiItem item = gui.getGuiItem(i);
-                    if (item.getItemStack() != null) {
-                        main[i1] = item.getItemStack();
+                    ItemStack item = gui.getInventory().getItem(i);
+                    if (item != null) {
+                        main[i1] = item;
                     } else {
                         main[i1] = new ItemStack(Material.AIR);
                     }
@@ -39,9 +58,9 @@ public class CookingGui {
                 ItemStack[] opt = new ItemStack[4];
                 i1 = 0;
                 for (int i = 19; i < 22; i++) {
-                    GuiItem item = gui.getGuiItem(i);
-                    if (item.getItemStack() != null) {
-                        opt[i1] = item.getItemStack();
+                    ItemStack item = gui.getInventory().getItem(i);
+                    if (item != null) {
+                        opt[i1] = item;
                     } else {
                         opt[i1] = new ItemStack(Material.AIR);
                     }
@@ -71,27 +90,12 @@ public class CookingGui {
             gui.setItem(38, GuiUtils.convertToGuiItem(Material.GRAY_STAINED_GLASS_PANE, "Progress..."));
             gui.setItem(39, GuiUtils.convertToGuiItem(Material.GRAY_STAINED_GLASS_PANE, "Progress..."));
             gui.setItem(40, GuiUtils.convertToGuiItem(Material.GRAY_STAINED_GLASS_PANE, "Progress..."));
-            gui.setItem(42, FlameGui.createFlameGui(Material.SMOKER, player));
+            GuiItem i42 = GuiUtils.convertToGuiItem(Material.SMOKER, "Plomien");
+            i42.setAction(event -> FlameGui.openFlameGui(player));
+            gui.setItem(42, i42);
         } catch (GuiException e) {
             e.printStackTrace();
         }
-
-        GuiFiller filler = new GuiFiller(gui);
-        GuiItem fillerMaterial = GuiUtils.convertToGuiItem(Material.GRAY_STAINED_GLASS_PANE);
-        try {
-            filler.fillBorder(fillerMaterial);
-            filler.fillBetweenPoints(4, 1, 4, 9, fillerMaterial);
-            filler.fillBetweenPoints(2, 5, 2, 5, fillerMaterial);
-            filler.fillBetweenPoints(3, 5, 3, 5, fillerMaterial);
-            filler.fillBetweenPoints(5, 5, 5, 5, fillerMaterial);
-        }catch (GuiException e) {
-            e.printStackTrace();
-        }
-
-
-
-
-
     }
 
     public static void openCookingGui(Player player) {

@@ -18,6 +18,7 @@ public final class CookingMinigame extends JavaPlugin {
         recipesController = new RecipesController();
         flameController = new FlameTypeController();
         getCommand("cook").setExecutor(new CookingCommand());
+        Storage.load();
     }
 
     @Override
