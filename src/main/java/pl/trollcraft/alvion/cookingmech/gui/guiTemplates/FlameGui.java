@@ -1,5 +1,6 @@
 package pl.trollcraft.alvion.cookingmech.gui.guiTemplates;
 
+import me.mattstudios.mfgui.gui.components.GuiType;
 import me.mattstudios.mfgui.gui.components.util.ItemBuilder;
 import me.mattstudios.mfgui.gui.guis.Gui;
 import me.mattstudios.mfgui.gui.guis.GuiItem;
@@ -10,85 +11,98 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import pl.trollcraft.alvion.cookingmech.Storage;
 import pl.trollcraft.alvion.cookingmech.gui.GuiUtils;
+import pl.trollcraft.alvion.cookingmech.Debug;
 
 import java.util.ArrayList;
 
 
 public class FlameGui {
-    private static Gui gui = GuiUtils.createHopperGui("Moc Plomienia");
-    public static void createFlameGui(Player player) {
+    private static Gui gui = GuiUtils.createGui(GuiType.HOPPER, "Moc Plomienia");
+    public static void createFlameGui() {
         ItemStack active = new ItemStack(Material.GREEN_STAINED_GLASS_PANE);
         /*
-        //TODO getting active flame level
+        * TODO getting active flame level
         */
 
+        Debug.log("Setting up itemstacks...");
         ItemStack guiItemStack1 = new ItemStack(Material.RED_STAINED_GLASS_PANE);
         ItemStack guiItemStack2 = new ItemStack(Material.RED_STAINED_GLASS_PANE);
         ItemStack guiItemStack3 = new ItemStack(Material.RED_STAINED_GLASS_PANE);
         ItemStack guiItemStack4 = new ItemStack(Material.RED_STAINED_GLASS_PANE);
         ItemStack guiItemStack5 = new ItemStack(Material.RED_STAINED_GLASS_PANE);
+        Debug.log("Done!");
 
+        Debug.log("Seeting up names and lores...");
         setLoreAndName("Moc plomienia: 0", "Uzyj zaru z poprzedniego pieczenia", guiItemStack1);
         setLoreAndName("Moc plomienia: 1", "Uzyj malego plomienia", guiItemStack2);
         setLoreAndName("Moc plomienia: 2", "Uzyj sredniego plomienia", guiItemStack3);
         setLoreAndName("Moc plomienia: 3", "Uzyj normalnego plomienia", guiItemStack4);
         setLoreAndName("Moc plomienia: 4", "Uzyj duzego plomienia", guiItemStack5);
+        Debug.log("Done!");
 
+        Debug.log("Creating guiitems...");
         GuiItem guiItem1 = new GuiItem(guiItemStack1);
         GuiItem guiItem2 = new GuiItem(guiItemStack2);
         GuiItem guiItem3 = new GuiItem(guiItemStack3);
         GuiItem guiItem4 = new GuiItem(guiItemStack4);
         GuiItem guiItem5 = new GuiItem(guiItemStack5);
+        Debug.log("Done!");
 
-        guiItem1.setAction(event -> {
-            event.setCancelled(true);
+        guiItem1.setAction(event1 -> {
+            Debug.log("Event: gui1");
+            event1.setCancelled(true);
             //flame off
-
-            Storage.activeFlame.put(player, Storage.flameTypes.get(0));
-            player.playSound(player.getLocation(), Sound.BLOCK_FIRE_AMBIENT, 1f, 0f);
+            Debug.log("Storage.activeFlames: " + Storage.activeFlame.getOrDefault((event1.getWhoClicked()), "no value"));
+            Storage.activeFlame.put(((Player) event1.getWhoClicked()).getPlayer(), Storage.flameTypes.get(0));
+            ((Player) event1.getWhoClicked()).playSound(event1.getWhoClicked().getLocation(), Sound.BLOCK_FIRE_AMBIENT, 1f, 0f);
 
             //action after
-            CookingGui.openCookingGui(player);
+            CookingGui.openCookingGui(((Player) event1.getWhoClicked()).getPlayer());
         });
-        guiItem2.setAction(event -> {
-            event.setCancelled(true);
+        guiItem2.setAction(event2 -> {
+            Debug.log("Event: gui2");
+            event2.setCancelled(true);
             //light flame
 
-            Storage.activeFlame.put(player, Storage.flameTypes.get(1));
-            player.playSound(player.getLocation(), Sound.BLOCK_FIRE_AMBIENT, 1f, 0f);
+            Storage.activeFlame.put(((Player) event2.getWhoClicked()), Storage.flameTypes.get(1));
+            ((Player) event2.getWhoClicked()).playSound(event2.getWhoClicked().getLocation(), Sound.BLOCK_FIRE_AMBIENT, 1f, 0f);
 
             //action after
-            CookingGui.openCookingGui(player);
+            CookingGui.openCookingGui(((Player) event2.getWhoClicked()));
         });
-        guiItem3.setAction(event -> {
-            event.setCancelled(true);
+        guiItem3.setAction(event3 -> {
+            Debug.log("Event: gui3");
+            event3.setCancelled(true);
+
             //medium flame
 
-            Storage.activeFlame.put(player, Storage.flameTypes.get(2));
-            player.playSound(player.getLocation(), Sound.BLOCK_FIRE_AMBIENT, 1f, 0f);
+            Storage.activeFlame.put(((Player) event3.getWhoClicked()), Storage.flameTypes.get(2));
+            ((Player) event3.getWhoClicked()).playSound(event3.getWhoClicked().getLocation(), Sound.BLOCK_FIRE_AMBIENT, 1f, 0f);
 
             //action after
-            CookingGui.openCookingGui(player);
+            CookingGui.openCookingGui(((Player) event3.getWhoClicked()));
         });
-        guiItem4.setAction(event -> {
-            event.setCancelled(true);
+        guiItem4.setAction(event4 -> {
+            Debug.log("Event: gui4");
+            event4.setCancelled(true);
             //normal flame
 
-            Storage.activeFlame.put(player, Storage.flameTypes.get(3));
-            player.playSound(player.getLocation(), Sound.BLOCK_FIRE_AMBIENT, 1f, 0f);
+            Storage.activeFlame.put(((Player) event4.getWhoClicked()), Storage.flameTypes.get(3));
+            ((Player) event4.getWhoClicked()).playSound(event4.getWhoClicked().getLocation(), Sound.BLOCK_FIRE_AMBIENT, 1f, 0f);
 
             //action after
-            CookingGui.openCookingGui(player);
+            CookingGui.openCookingGui(((Player) event4.getWhoClicked()));
         });
-        guiItem5.setAction(event -> {
-            event.setCancelled(true);
+        guiItem5.setAction(event5 -> {
+            Debug.log("Event: gui5");
+            event5.setCancelled(true);
             //big flame
 
-            Storage.activeFlame.put(player, Storage.flameTypes.get(4));
-            player.playSound(player.getLocation(), Sound.BLOCK_FIRE_AMBIENT, 1f, 0f);
+            Storage.activeFlame.put(((Player) event5.getWhoClicked()), Storage.flameTypes.get(4));
+            ((Player) event5.getWhoClicked()).playSound(event5.getWhoClicked().getLocation(), Sound.BLOCK_FIRE_AMBIENT, 1f, 0f);
 
             //action after
-            CookingGui.openCookingGui(player);
+            CookingGui.openCookingGui(((Player) event5.getWhoClicked()));
         });
 
         gui.setItem(0,guiItem1);
@@ -123,8 +137,13 @@ public class FlameGui {
     }
 
     public static void openFlameGui(Player player) {
-        createFlameGui(player);
+        createFlameGui();
         gui.open(player);
+    }
+
+    public static Gui getFlameGui() {
+        createFlameGui();
+        return gui;
     }
 
     public static void setLoreAndName(String name, String lore, ItemStack item) {

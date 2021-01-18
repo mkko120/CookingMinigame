@@ -12,15 +12,16 @@ import java.util.ArrayList;
 
 public class GuiUtils {
 
-    public static Gui createChestGui(String title) {
-        return new Gui(GuiType.CHEST, title);
+
+    public static Gui createGui(int size, String title) {
+        return new Gui(size,title);
     }
 
-    public static Gui createHopperGui(String title) {
-        return new Gui(GuiType.HOPPER, title);
+    public static Gui createGui(GuiType type, String title) {
+        return new Gui(type,title);
     }
 
-    public static PersistentGui createPersistentGui(Integer size, String title) {
+    public static PersistentGui createPersistentGui(int size, String title) {
         return new PersistentGui(size,title);
     }
 
