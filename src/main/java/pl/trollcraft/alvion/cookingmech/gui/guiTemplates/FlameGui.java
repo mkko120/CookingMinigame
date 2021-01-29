@@ -4,6 +4,7 @@ import me.mattstudios.mfgui.gui.components.GuiType;
 import me.mattstudios.mfgui.gui.components.util.ItemBuilder;
 import me.mattstudios.mfgui.gui.guis.Gui;
 import me.mattstudios.mfgui.gui.guis.GuiItem;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 
 
 public class FlameGui {
-    private static Gui gui = GuiUtils.createGui(GuiType.HOPPER, "Moc Plomienia");
+    private static final Gui gui = GuiUtils.createGui(GuiType.HOPPER, "Moc Plomienia");
     public static void createFlameGui() {
         ItemStack active = new ItemStack(Material.GREEN_STAINED_GLASS_PANE);
         /*
@@ -52,23 +53,25 @@ public class FlameGui {
             Debug.log("Event: gui1");
             event1.setCancelled(true);
             //flame off
-            Debug.log("Storage.activeFlames: " + Storage.activeFlame.getOrDefault((event1.getWhoClicked()), "no value"));
+            Debug.log("Storage.activeFlames: " + Storage.activeFlame.getOrDefault((event1.getWhoClicked()), null));
             Storage.activeFlame.put(((Player) event1.getWhoClicked()).getPlayer(), Storage.flameTypes.get(0));
+            Debug.log("Storage.activeFlames: " + Storage.activeFlame.getOrDefault((event1.getWhoClicked()), null));
             ((Player) event1.getWhoClicked()).playSound(event1.getWhoClicked().getLocation(), Sound.BLOCK_FIRE_AMBIENT, 1f, 0f);
 
             //action after
-            CookingGui.openCookingGui(((Player) event1.getWhoClicked()).getPlayer());
+            Bukkit.dispatchCommand(event1.getWhoClicked(), "cook");
         });
         guiItem2.setAction(event2 -> {
             Debug.log("Event: gui2");
             event2.setCancelled(true);
             //light flame
 
+
             Storage.activeFlame.put(((Player) event2.getWhoClicked()), Storage.flameTypes.get(1));
             ((Player) event2.getWhoClicked()).playSound(event2.getWhoClicked().getLocation(), Sound.BLOCK_FIRE_AMBIENT, 1f, 0f);
 
             //action after
-            CookingGui.openCookingGui(((Player) event2.getWhoClicked()));
+            Bukkit.dispatchCommand(event2.getWhoClicked(), "cook");
         });
         guiItem3.setAction(event3 -> {
             Debug.log("Event: gui3");
@@ -80,7 +83,7 @@ public class FlameGui {
             ((Player) event3.getWhoClicked()).playSound(event3.getWhoClicked().getLocation(), Sound.BLOCK_FIRE_AMBIENT, 1f, 0f);
 
             //action after
-            CookingGui.openCookingGui(((Player) event3.getWhoClicked()));
+            Bukkit.dispatchCommand(event3.getWhoClicked(), "cook");
         });
         guiItem4.setAction(event4 -> {
             Debug.log("Event: gui4");
@@ -91,7 +94,7 @@ public class FlameGui {
             ((Player) event4.getWhoClicked()).playSound(event4.getWhoClicked().getLocation(), Sound.BLOCK_FIRE_AMBIENT, 1f, 0f);
 
             //action after
-            CookingGui.openCookingGui(((Player) event4.getWhoClicked()));
+            Bukkit.dispatchCommand(event4.getWhoClicked(), "cook");
         });
         guiItem5.setAction(event5 -> {
             Debug.log("Event: gui5");
@@ -102,7 +105,7 @@ public class FlameGui {
             ((Player) event5.getWhoClicked()).playSound(event5.getWhoClicked().getLocation(), Sound.BLOCK_FIRE_AMBIENT, 1f, 0f);
 
             //action after
-            CookingGui.openCookingGui(((Player) event5.getWhoClicked()));
+            Bukkit.dispatchCommand(event5.getWhoClicked(), "cook");
         });
 
         gui.setItem(0,guiItem1);

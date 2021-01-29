@@ -2,8 +2,8 @@ package pl.trollcraft.alvion.cookingmech.recipes.flames;
 
 public class FlameTime {
 
-    private int min;
-    private int max;
+    private final int min;
+    private final int max;
 
     /**
      * Parameter in Recipe responsible for:

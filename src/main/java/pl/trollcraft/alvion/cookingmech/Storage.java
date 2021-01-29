@@ -1,5 +1,6 @@
 package pl.trollcraft.alvion.cookingmech;
 
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import pl.trollcraft.alvion.cookingmech.recipes.Recipe;
 import pl.trollcraft.alvion.cookingmech.recipes.flames.FlameType;
@@ -13,13 +14,15 @@ public class Storage {
 
     public static ArrayList<Recipe> basicRecipes;
     public static ArrayList<FlameType> flameTypes;
-    public static HashMap<Player, Object> activeFlame;
+    public static HashMap<Player, FlameType> activeFlame;
+    public static YamlConfiguration recipes;
 
     public static void load() {
         basicRecipes = new ArrayList<>();
+        BreadTemplate.load();
         flameTypes = new ArrayList<>();
+        DefaultFlameTypes.load();
         activeFlame = new HashMap<>();
-        basicRecipes.addAll(BreadTemplate.load());
-        flameTypes.addAll(DefaultFlameTypes.load());
+        recipes = Config.load("recipes.yml", CookingMinigame.getPlugin(CookingMinigame.class));
     }
 }

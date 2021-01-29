@@ -7,6 +7,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import pl.trollcraft.alvion.cookingmech.gui.guiTemplates.CookingGui;
+import pl.trollcraft.alvion.cookingmech.gui.guiTemplates.FlameGui;
 
 public class CookingCommand implements CommandExecutor {
     /**
@@ -25,7 +26,16 @@ public class CookingCommand implements CommandExecutor {
     public boolean onCommand( CommandSender sender, Command command, String label, String[] args) {
 
         if (sender instanceof Player) {
-            CookingGui.openCookingGui((Player) sender);
+            Player player = (Player) sender;
+            if (args.length == 0) {
+                CookingGui.openCookingGui(player);
+            } else if (args.length == 1) {
+                if (args[0].equals("flame")) {
+                    FlameGui.openFlameGui(player);
+                } else {
+                    CookingGui.openCookingGui(player);
+                }
+            }
         } else
         if (sender instanceof ConsoleCommandSender && args.length >= 1) {
 
